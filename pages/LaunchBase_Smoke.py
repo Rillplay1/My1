@@ -1,4 +1,5 @@
 from playwright.sync_api import Page, expect
+from config.logger import logger
 
 class BasePage:
     def __init__(self, page: Page):
@@ -12,9 +13,11 @@ class BasePage:
 class SmokeTests(BasePage):
     def open(self):
         self.page.goto("https://launch-base.online/")
+        logger.info("Открываем главную страницу")
 
     def click_registration(self):
         self.page.locator('a[href="/registration"]').nth(0).click()
+        logger.info("Кликаем на регистрацию")
 
     def check_url_registration(self):
         expect(self.page).to_have_url("https://launch-base.online/registration")
@@ -22,10 +25,13 @@ class SmokeTests(BasePage):
     def registration_path(self, role):
         self.page.locator(f'//img[@alt="{role}"]').click()
         self.page.locator('//a[@href="/sign-up"]').click()
+        logger.info("Выбрали роль и кликнуть далее")
         self.page.locator('//input[@name="phone"]').fill("79999999999")
         self.page.locator('(//button[@type="submit"])[1]').click()
+        logger.info("Вести номер телефона и нажать далее")
 
-    def check_url_registration(self):
+
+    def check_tg_url_registration(self):
         expect(self.page).to_have_url("https://launch-base.online/last-step")
 
     def switch_to_iframe(self):
@@ -39,5 +45,7 @@ class SmokeTests(BasePage):
 class LoginPage(SmokeTests):
     def click_sign_in(self):
         self.page.locator('a[href="/login"]').nth(0).click()
+        logger.info("Кликнуть на авторизацию")
+
     def check_url_login(self):
         expect(self.page).to_have_url("https://launch-base.online/login")

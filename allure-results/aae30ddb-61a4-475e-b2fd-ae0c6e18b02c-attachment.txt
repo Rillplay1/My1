@@ -1,0 +1,2 @@
+[32mINFO    [0m MyLogger:LaunchBase_Smoke.py:16 Открываем главную страницу
+[32mINFO    [0m MyLogger:regress.py:23 Кликаем на блог

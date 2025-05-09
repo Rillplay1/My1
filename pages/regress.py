@@ -1,11 +1,13 @@
 from pages.LaunchBase_Smoke import BasePage
 from playwright.sync_api import expect
+from config.logger import logger
 
 
 
 class Cases(BasePage):
     def click_cases(self):
         self.page.locator('(//a[@href="/successful-outcomes-and-experience"])[1]').click()
+        logger.info("Кликаем на кейсы")
 
     def check_cases_url(self):
         expect(self.page).to_have_url("https://launch-base.online/successful-outcomes-and-experience")
@@ -18,6 +20,7 @@ class Cases(BasePage):
 class Blog(BasePage):
     def click_blog(self):
         self.page.locator('//a[@href="/blog"]').click()
+        logger.info("Кликаем на блог")
 
     def check_blog_url(self):
         expect(self.page).to_have_url("https://launch-base.online/blog")
@@ -27,6 +30,7 @@ class Blog(BasePage):
 class AboutUs(BasePage):
     def click_about_us(self):
         self.page.locator('//a[@href="/about"]').click()
+        logger.info("Кликаем на раздел о нас")
 
     def check_about_us_url(self):
         expect(self.page).to_have_url("https://launch-base.online/about")
@@ -37,6 +41,7 @@ class TgSupport(BasePage):
     def click_tg_support_check_url(self):
         with self.page.expect_popup() as popup_info:
             self.page.locator('(//a[@href="https://t.me/Launch_Base"])[1]').click()
+            logger.info("Кликаем на поддержку в тг")
             popup = popup_info.value
             expect(popup).to_have_url("https://t.me/Launch_Base")
 

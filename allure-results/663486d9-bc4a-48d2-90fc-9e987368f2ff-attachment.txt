@@ -1,0 +1,4 @@
+[32mINFO    [0m MyLogger:LaunchBase_Smoke.py:16 Открываем главную страницу
+[32mINFO    [0m MyLogger:LaunchBase_Smoke.py:20 Кликаем на регистрацию
+[32mINFO    [0m MyLogger:LaunchBase_Smoke.py:28 Выбрали роль и кликнуть далее
+[32mINFO    [0m MyLogger:LaunchBase_Smoke.py:31 Вести номер телефона и нажать далее
