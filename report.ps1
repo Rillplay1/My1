@@ -1,7 +1,7 @@
-if (Test-Path "allure-report") {
-    Remove-Item "allure-report" -Recurse -Force
+if (Test-Path "reports/allure-report") {
+    Remove-Item "reports/allure-report" -Recurse -Force
 }
 
-allure generate allure-results --clean -o allure-report
+allure generate reports/allure-results --clean -o reports/allure-report
 
-allure open allure-report
+allure open reports/allure-report
