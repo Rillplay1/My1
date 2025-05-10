@@ -11,6 +11,7 @@ def test_sign_up(page: Page, role: str):
     smoke_tests = SmokeTests(page)
     smoke_tests.open()
     smoke_tests.click_registration()
+    smoke_tests.check_url_registration()
     smoke_tests.registration_path(role)
     smoke_tests.check_tg_url_registration()
     smoke_tests.switch_to_iframe()
