@@ -18,7 +18,6 @@ def test_sign_up(page: Page, role: str):
     smoke_tests.tg_button_visible()
 
 
-
 def test_sign_in(page: Page):
     smoke_tests = SmokeTests(page)
     login_page = LoginPage(page)
