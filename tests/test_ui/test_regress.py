@@ -1,5 +1,5 @@
 from playwright.sync_api import Page
-from pages.LaunchBase_Smoke import SmokeTests
+from pages.Sign_up_and_Sign_in import SmokeTests
 from pages.regress import Cases, Blog, AboutUs, TgSupport
 
 

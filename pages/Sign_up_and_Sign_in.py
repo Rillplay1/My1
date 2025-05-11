@@ -9,14 +9,13 @@ class BasePage:
     def get_url(self) -> str:
         return self.page.url
 
-
-
-class SmokeTests(BasePage):
     @allure.step("Открываем главную страницу")
     def open(self):
         self.page.goto("https://launch-base.online/")
 
 
+
+class SignUp(BasePage):
 
     @allure.step("Кликнуть на регистрацию")
     def click_registration(self):
@@ -30,11 +29,12 @@ class SmokeTests(BasePage):
 
 
 
-    def registration_path(self, role):
+    def select_role (self, role):
         with allure.step("Выбрать роль"):
             self.page.locator(f'//img[@alt="{role}"]').click()
         with allure.step("Нажать продолжить"):
             self.page.locator('//a[@href="/sign-up"]').click()
+    def enter_number(self):
         with allure.step("Ввести номер телефона"):
             self.page.locator('//input[@name="phone"]').fill("79999999999")
         with allure.step("Нажать далее"):
@@ -57,7 +57,7 @@ class SmokeTests(BasePage):
         expect(button).to_be_visible()
 
 
-class LoginPage(SmokeTests):
+class SignIn(SignUp):
     @allure.step("Кликнуть на авторизацию")
     def click_sign_in(self):
         self.page.locator('a[href="/login"]').nth(0).click()

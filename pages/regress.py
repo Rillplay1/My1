@@ -1,6 +1,6 @@
 import allure
 
-from pages.LaunchBase_Smoke import BasePage
+from pages.Sign_up_and_Sign_in import BasePage
 from playwright.sync_api import expect
 
 
