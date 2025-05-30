@@ -1,33 +1,16 @@
 import allure
-from playwright.sync_api import Page, expect
-
-
-class BasePage:
-    def __init__(self, page: Page):
-        self.page = page
-
-    def get_url(self) -> str:
-        return self.page.url
-
-    @allure.step("Открываем главную страницу")
-    def open(self):
-        self.page.goto("https://launch-base.online/")
-
+from playwright.sync_api import expect
+from pages.Base_page import BasePage
 
 
 class SignUp(BasePage):
-
     @allure.step("Кликнуть на регистрацию")
     def click_registration(self):
         self.page.locator('a[href="/registration"]').nth(0).click()
 
-
-
     @allure.step("Проверка юрл регистрации")
     def check_url_registration(self):
         expect(self.page).to_have_url("https://launch-base.online/registration")
-
-
 
     def select_role (self, role):
         with allure.step("Выбрать роль"):
@@ -40,30 +23,14 @@ class SignUp(BasePage):
         with allure.step("Нажать далее"):
             self.page.locator('(//button[@type="submit"])[1]').click()
 
-
-
     @allure.step("Проверка юрла регистрации (окно с тг)")
     def check_tg_url_registration(self):
         expect(self.page).to_have_url("https://launch-base.online/last-step")
 
-
     def switch_to_iframe(self):
         self.iframe = self.page.frame_locator("iframe").first
-
 
     @allure.step("Проверка что кнопка регистрации через тг видна")
     def tg_button_visible(self):
         button = self.iframe.locator('//button[@class="btn tgme_widget_login_button"]')
         expect(button).to_be_visible()
-
-
-class SignIn(SignUp):
-    @allure.step("Кликнуть на авторизацию")
-    def click_sign_in(self):
-        self.page.locator('a[href="/login"]').nth(0).click()
-
-
-    @allure.step("Проверка юрла на странице логина")
-    def check_url_login(self):
-        expect(self.page).to_have_url("https://launch-base.online/login")
-
