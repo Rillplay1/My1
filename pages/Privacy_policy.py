@@ -8,7 +8,7 @@ class PrivacyPolicy(BasePage):
     def click_privacy_policy(self):
         self.page.locator('//a[@href="/policy"]').click()
 
-    @allure.step("Проверка юрла на странице")
+    @allure.step("Проверка URL на странице")
     def check_privacy_policy_url(self):
         expect(self.page).to_have_url("https://launch-base.online/policy")
 

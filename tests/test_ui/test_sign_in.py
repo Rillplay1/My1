@@ -1,8 +1,10 @@
 from playwright.sync_api import Page
 from pages.Sign_In import SignIn
 from pages.Sign_Up import SignUp
+import allure
 
-
+@allure.feature("Авторизация")
+@allure.story("Авторизация через главную страницу")
 def test_sign_in(page: Page):
     sign_in = SignIn(page)
     sign_up = SignUp(page)

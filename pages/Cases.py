@@ -8,7 +8,7 @@ class Cases(BasePage):
     def click_cases(self):
         self.page.locator('(//a[@href="/successful-outcomes-and-experience"])[1]').click()
 
-    @allure.step("Проверка юрла на странице кейсов")
+    @allure.step("Проверка URL на странице кейсов")
     def check_cases_url(self):
         expect(self.page).to_have_url("https://launch-base.online/successful-outcomes-and-experience")
 

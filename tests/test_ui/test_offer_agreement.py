@@ -1,8 +1,10 @@
 from playwright.sync_api import Page
 from pages.Offer_agreement import OfferAgreement
+import allure
 
 
-
+@allure.feature("Договор оферты")
+@allure.story("Кликнуть на договор оферты")
 def test_offer_agreement(page: Page):
     offer_agreement = OfferAgreement(page)
     offer_agreement.open()
