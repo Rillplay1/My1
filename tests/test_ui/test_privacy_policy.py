@@ -3,8 +3,8 @@ from pages.Privacy_policy import PrivacyPolicy
 import allure
 
 
-@allure.feature("Политика конфиденциальности test")
-@allure.story("Кликнуть на политику конфиденциальности test")
+@allure.feature("Политика конфиденциальности")
+@allure.story("Кликнуть на политику конфиденциальности")
 def test_offer_agreement(page: Page):
     offer_agreement = PrivacyPolicy(page)
     offer_agreement.open()

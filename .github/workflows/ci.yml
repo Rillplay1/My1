@@ -1,34 +1,53 @@
-name: Run Playwright Tests with Allure #Имя пайплайна
-#Будет запускаться при пуше в ветку main и при pull_request
+# Название workflow — отображается в GitHub Actions
+name: Run Playwright Tests with Allure
+
+# Условия запуска:
+# - при пуше в ветку main
+# - при открытии pull request
 on:
   push:
     branches:
       - main
   pull_request:
 
-jobs: #Название джобы и запуск на ubuntu-latest
-  test:
+jobs:
+   # Название задачи (job) — тестирование автотестов (AQA)
+  AQA_test:
+        # Используется виртуальная машина Ubuntu последней версии
     runs-on: ubuntu-latest
 
-    steps: #Шаги их название и само действие шага
+    steps:
+
+      # Шаг 1: Клонирует репозиторий на CI-машину
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      # Шаг 2: Сборка Docker-образа из Dockerfile в корне проекта
       - name: Build Docker image
         run: docker build -t
           my-playwright-tests .
 
+      # Шаг 3: Запуск тестов внутри контейнера
       - name: Run tests in Docker container
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}/allure-results:/app/allure-results \
-            -v ${{ github.workspace }}/allure-report:/app/allure-report \
-            my-playwright-tests \
+#          Монтируем папку для результатов Allure
+            -v ${{ github.workspace }}/allure-results:/app/allure-results \ 
+#           Монтируем папку для отчёта Allure
+            -v ${{ github.workspace }}/allure-report:/app/allure-report \ 
+#           Имя Docker-образа
+            my-playwright-tests \ 
             /bin/bash -c "pytest --alluredir=allure-results && allure generate allure-results -o allure-report --clean"
+#             В контейнере запускаем:
+#             - pytest с сохранением результатов в allure-results
+#             - генерацию HTML-отчёта из этих результатов в allure-report
 
+# Шаг 4: Сохраняем сгенерированный отчёт как артефакт CI
       - name: Upload allure Report Artifact
         uses: actions/upload-artifact@v4
         with:
+          # Имя артефакта
           name: allure-report
+            # Путь к папке с отчётом
           path: allure-report
 
