@@ -1,16 +1,16 @@
-name: Run Playwright Tests with Allure
-
+name: Run Playwright Tests with Allure #Имя пайплайна
+#Будет запускаться при пуше в ветку main и при pull_request
 on:
   push:
     branches:
       - main
   pull_request:
 
-jobs:
+jobs: #Название джобы и запуск на ubuntu-latest
   test:
     runs-on: ubuntu-latest
 
-    steps:
+    steps: #Шаги их название и само действие шага
       - name: Checkout repo
         uses: actions/checkout@v3
 
