@@ -11,6 +11,5 @@ def test_sign_in(page: Page):
     sign_in.open()
     sign_in.click_sign_in()
     sign_in.check_url_login()
-    sign_up.switch_to_iframe()
     sign_up.tg_button_visible()
 

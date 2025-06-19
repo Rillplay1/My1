@@ -33,12 +33,12 @@ class SignUp(BasePage):
         expect(self.page).to_have_url("https://launch-base.online/last-step")
 
 
-    def switch_to_iframe(self):
-        self.iframe = self.page.frame_locator("iframe").first
+    def __get_iframe(self):
+        return self.page.frame_locator("iframe").first
 
 
     @allure.step("Проверка что кнопка регистрации через Telegram видна")
     def tg_button_visible(self):
-        button = self.iframe.locator('//button[@class="btn tgme_widget_login_button"]')
+        button = self.__get_iframe().locator('//button[@class="btn tgme_widget_login_button"]')
         expect(button).to_be_visible()
 

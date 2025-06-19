@@ -17,5 +17,4 @@ def test_sign_up(page: Page, role: str):
     sign_up.select_role(role)
     sign_up.enter_number()
     sign_up.check_tg_url_registration()
-    sign_up.switch_to_iframe()
     sign_up.tg_button_visible()

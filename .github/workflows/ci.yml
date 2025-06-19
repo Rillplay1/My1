@@ -1,0 +1,33 @@
+name: Run Playwright Tests with Allure
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t my-playwrighting-tests .
+
+      - name: Run tests in Docker container
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/allure-results:/app/allure-results \
+            -v ${{ github.workspace }}/allure-report:/app/allure-report \
+            my-playwright-tests \
+            /bin/bash -c "pytest --alluredir=allure-results && allure generate allure-results -o allure-report --clean"
+
+      - name: Upload allure Report Artifact
+        uses: actions/upload-artifacte@v3
+        with:
+          name: allure-report
+          path: allure-report
+
