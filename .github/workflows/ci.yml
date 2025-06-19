@@ -30,9 +30,9 @@ jobs:
       - name: Run tests in Docker container
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}/allure-results:/app/allure-results \ 
-            -v ${{ github.workspace }}/allure-report:/app/allure-report \    
-            my-playwright-tests \                                            
+            -v ${{ github.workspace }}/allure-results:/app/allure-results \
+            -v ${{ github.workspace }}/allure-report:/app/allure-report \
+            my-playwright-tests \
             /bin/bash -c "pytest --alluredir=allure-results && allure generate allure-results -o allure-report --clean"
           
 
