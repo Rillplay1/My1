@@ -11,9 +11,9 @@ on:
   pull_request:
 
 jobs:
-   # Название задачи (job) — тестирование автотестов (AQA)
+  # Название задачи (job) — тестирование автотестов (AQA)
   AQA_test:
-        # Используется виртуальная машина Ubuntu последней версии
+    # Используется виртуальная машина Ubuntu последней версии
     runs-on: ubuntu-latest
 
     steps:
@@ -24,30 +24,24 @@ jobs:
 
       # Шаг 2: Сборка Docker-образа из Dockerfile в корне проекта
       - name: Build Docker image
-        run: docker build -t
-          my-playwright-tests .
+        run: docker build -t my-playwright-tests .
 
       # Шаг 3: Запуск тестов внутри контейнера
       - name: Run tests in Docker container
         run: |
           docker run --rm \
-#          Монтируем папку для результатов Allure
-            -v ${{ github.workspace }}/allure-results:/app/allure-results \ 
-#           Монтируем папку для отчёта Allure
-            -v ${{ github.workspace }}/allure-report:/app/allure-report \ 
-#           Имя Docker-образа
-            my-playwright-tests \ 
+            -v ${{ github.workspace }}/allure-results:/app/allure-results \  # Монтируем папку для результатов Allure
+            -v ${{ github.workspace }}/allure-report:/app/allure-report \    # Монтируем папку для отчёта Allure
+            my-playwright-tests \                                            # Имя Docker-образа
             /bin/bash -c "pytest --alluredir=allure-results && allure generate allure-results -o allure-report --clean"
-#             В контейнере запускаем:
-#             - pytest с сохранением результатов в allure-results
-#             - генерацию HTML-отчёта из этих результатов в allure-report
+          # В контейнере запускаем:
+          # - pytest с сохранением результатов в allure-results
+          # - генерацию HTML-отчёта из этих результатов в allure-report
 
-# Шаг 4: Сохраняем сгенерированный отчёт как артефакт CI
+      # Шаг 4: Сохраняем сгенерированный отчёт как артефакт CI
       - name: Upload allure Report Artifact
         uses: actions/upload-artifact@v4
         with:
-          # Имя артефакта
-          name: allure-report
-            # Путь к папке с отчётом
-          path: allure-report
+          name: allure-report     # Имя артефакта
+          path: allure-report     # Путь к папке с отчётом
 
