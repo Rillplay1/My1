@@ -30,16 +30,10 @@ jobs:
       - name: Run tests in Docker container
         run: |
           docker run --rm \
-#           Монтируем папку для результатов Allure
             -v ${{ github.workspace }}/allure-results:/app/allure-results \
-          # Монтируем папку для отчёта Allure
             -v ${{ github.workspace }}/allure-report:/app/allure-report \
-          # Имя Docker-образа
             my-playwright-tests \
             /bin/bash -c "pytest --alluredir=allure-results && allure generate allure-results -o allure-report --clean"
-          #В контейнере запускаем:
-          #pytest с сохранением результатов в allure-results
-          #генерацию HTML-отчёта из этих результатов в allure-report
 
       # Шаг 4: Сохраняем сгенерированный отчёт как артефакт CI
       - name: Upload allure Report Artifact
