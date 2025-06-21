@@ -75,3 +75,13 @@ jobs:
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
             publish_dir: allure-report
+
+      - name: Send GitHub Pages URL to Telegram
+        env:
+            TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+            TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+            REPORT_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d text="📝 Allure отчет опубликован: ${REPORT_URL}"
