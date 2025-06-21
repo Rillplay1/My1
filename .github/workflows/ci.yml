@@ -34,6 +34,7 @@ jobs:
             -v ${{ github.workspace }}/allure-report:/app/allure-report \
             my-playwright-tests \
             /bin/bash -c "pytest --alluredir=allure-results && allure generate allure-results -o allure-report --clean"
+      
 
       # Шаг 4: Сохраняем сгенерированный отчёт как артефакт CI
       - name: Upload allure Report Artifact
@@ -56,7 +57,7 @@ jobs:
         run: ls -R
 
       - name: Archive Allure report
-        run: zip -r allure-report.zip reports/allure-report
+        run: zip -r allure-report.zip allure-report
 
       - name: Send Allure report to Telegram
         env:
