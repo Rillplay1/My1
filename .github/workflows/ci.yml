@@ -42,3 +42,28 @@ jobs:
           name: allure-report     # Имя артефакта
           path: allure-report     # Путь к папке с отчётом
 
+  deploy_report:
+    needs: AQA_test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download allure Report Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-report
+
+      - name: List downloaded report files (debug)
+        run: ls -R
+
+      - name: Archive Allure report
+        run: zip -r allure-report.zip allure-report
+
+      - name: Send Allure report to Telegram
+        env:
+          TELEGRAM_TOKEN: ${{secrets.TELEGRAM_TOKEN}}
+          TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendDocument" \
+            -F chat_id="${TELEGRAM_CHAT_ID}" \
+            -F document=@allure-report.zip \
+            -F caption="🧪 Allure отчет. Сгенерировано из GitHub Actions"
