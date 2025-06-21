@@ -57,18 +57,18 @@ jobs:
       - name: List downloaded report files (debug)
         run: ls -R
 
-      - name: Archive Allure report
-        run: zip -r allure-report.zip allure-report
-
-      - name: Send Allure report to Telegram
-        env:
-          TELEGRAM_TOKEN: ${{secrets.TELEGRAM_TOKEN}}
-          TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
-        run: |
-          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendDocument" \
-            -F chat_id="${TELEGRAM_CHAT_ID}" \
-            -F document=@allure-report.zip \
-            -F caption=" Allure отчет. Сгенерировано из GitHub Actions"
+#      - name: Archive Allure report
+#        run: zip -r allure-report.zip allure-report
+#
+#      - name: Send Allure report to Telegram
+#        env:
+#          TELEGRAM_TOKEN: ${{secrets.TELEGRAM_TOKEN}}
+#          TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
+#        run: |
+#          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendDocument" \
+#            -F chat_id="${TELEGRAM_CHAT_ID}" \
+#            -F document=@allure-report.zip \
+#            -F caption=" Allure отчет. Сгенерировано из GitHub Actions"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
