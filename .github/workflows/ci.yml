@@ -56,7 +56,7 @@ jobs:
         run: ls -R
 
       - name: Archive Allure report
-        run: zip -r allure-report.zip allure-report
+        run: zip -r allure-report.zip reports/allure-report
 
       - name: Send Allure report to Telegram
         env:
