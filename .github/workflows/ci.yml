@@ -45,19 +45,19 @@ jobs:
           name: allure-report     # Имя артефакта
           path: allure-report     # Путь к папке с отчётом
 
-  deploy_report:
-    needs: AQA_test
-    runs-on: ubuntu-latest
+  deploy_report: # Определение новой job под названием "deploy_report"
+    needs: AQA_test  # Эта job будет выполняться только после успешного завершения job "AQA_test"
+    runs-on: ubuntu-latest  # Запуск job происходит на виртуальной машине с Ubuntu последней версии
 
-    steps:
-      - name: Download allure Report Artifact
-        uses: actions/download-artifact@v4
+    steps:  # Список шагов, которые будут выполнены в рамках этой job
+      - name: Download allure Report Artifact # Шаг 1: загрузка артефакта (отчёта Allure) из предыдущей job
+        uses: actions/download-artifact@v4  # Используется готовое действие GitHub Actions для скачивания артефактов
         with:
-          name: allure-report
-          path: allure-report
+          name: allure-report  # Имя артефакта, который нужно скачать (такое же имя было в upload-artifact)
+          path: allure-report # Локальная директория, куда будет скачан артефакт (всё содержимое попадёт в эту папку)
 
-      - name: List downloaded report files (debug)
-        run: ls -R
+      - name: List downloaded report files (debug) # Шаг 2: отладочный вывод — выводит структуру файлов, которые были загружены
+        run: ls -R  # Рекурсивный вывод всех файлов и папок в текущей директории (показывает, что именно скачалось)
 
 #      - name: Archive Allure report
 #        run: zip -r allure-report.zip allure-report
@@ -72,16 +72,16 @@ jobs:
 #            -F document=@allure-report.zip \
 #            -F caption=" Allure отчет. Сгенерировано из GitHub Actions"
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Deploy to GitHub Pages  # Шаг 3: Публикация отчета на GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4  # Используется готовый GitHub Action от peaceiris для деплоя на gh-pages
         with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: allure-report
+            github_token: ${{ secrets.GITHUB_TOKEN }} # Секретный токен, автоматически предоставляемый GitHub, позволяет пушить в ветку gh-pages
+            publish_dir: allure-report # Указывает, какую папку опубликовать на GitHub Pages (в нашем случае папку с Allure-отчетом)
 
-      - name: Send GitHub Pages URL to Telegram
+      - name: Send GitHub Pages URL to Telegram # Шаг 4: Отправка ссылки на опубликованный отчет в Telegram
         env:
-            TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-            TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+            TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }} # Токен Telegram-бота (из секретов)
+            TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }} # ID чата, куда отправить сообщение (из секретов)
         run: |
             REPORT_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
             curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
