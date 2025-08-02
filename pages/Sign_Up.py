@@ -9,7 +9,7 @@ class SignUp(BasePage):
         self.page.locator('a[href="/registration"]').nth(0).click()
 
 
-    @allure.step("Проверка URL регистрации")
+    @allure.step("Проверка  регистрации")
     def check_url_registration(self):
         expect(self.page).to_have_url("https://launch-base.online/registration")
 
