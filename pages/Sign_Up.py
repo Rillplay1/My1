@@ -22,7 +22,7 @@ class SignUp(BasePage):
 
 
     def enter_number(self):
-        with allure.step("Ввести номер телефона"):
+        with allure.step("Ввести номер Nтелефона"):
             self.page.locator('//input[@name="phone"]').fill("79999999999")
         with allure.step("Нажать далее"):
             self.page.locator('(//button[@type="submit"])[1]').click()
@@ -41,4 +41,7 @@ class SignUp(BasePage):
     def tg_button_visible(self):
         button = self.__get_iframe().locator('//button[@class="btn tgme_widget_login_button"]')
         expect(button).to_be_visible()
+
+
+
 
